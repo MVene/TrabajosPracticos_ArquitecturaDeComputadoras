@@ -17,6 +17,7 @@
 | `alu.v`        | Núcleo de la ALU: operaciones aritméticas/lógicas y generación de flags.    |
 | `alu_top.v`    | Interfaz con la placa: conexión con switches, botones y LEDs.               |
 | `alu_top_tb.v` | Testbench funcional para simular el sistema completo.                       |
+| `alu_tb.v`     | Testbench funcional para simular solo la ALU. 
 | `alu_basys3.xdc` | Archivo de restricciones físicas para Basys 3.                            |
 
 ---
@@ -54,11 +55,15 @@ imagen de los pines marcados
 ## Validación y Simulación
 
 - Testbench funcional (`alu_top_tb.v`)
-- Testbench con entradas aleatorias y chequeo automático (`tb_ALU.v`)
+- Testbench con entradas aleatorias y chequeo automático (`tb_alu.v`)
 - Simulación en Vivado con capturas de resultados
 - Análisis de tiempo: restricciones, caminos críticos, multicycle paths
 
  capturas de simulación y análisis temporal.*
+
+ ![alt text](img/vivado-alu.png)
+
+ ![alt text](img/vivado-top_alu.png)
 
 ---
 
