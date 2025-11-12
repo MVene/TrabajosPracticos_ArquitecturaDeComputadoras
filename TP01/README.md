@@ -47,9 +47,7 @@
   - `BTNR`: reset
 - **LEDs (`o_led`)**: muestran el resultado.
 - **Flags (`o_flags`)**: indican `negative`, `zero`, `carry`.
-
-imagen de los pines marcados
-
+- 
 ---
 
 ## Validación y Simulación
@@ -57,13 +55,18 @@ imagen de los pines marcados
 - Testbench funcional (`alu_top_tb.v`)
 - Testbench con entradas aleatorias y chequeo automático (`tb_alu.v`)
 - Simulación en Vivado con capturas de resultados
-- Análisis de tiempo: restricciones, caminos críticos, multicycle paths
 
- capturas de simulación y análisis temporal.*
 
+ ![alt text](img/RTL.png)
+ Figura 1. Esquematico RTL
+ 
+ Figura2. [Esquematico Tecnologia](../img/schematic.pdf)
+ 
  ![alt text](img/vivado-alu.png)
+ Figura 3. Simulación de la ALU: operaciones con actualización de banderas 
 
  ![alt text](img/vivado-top_alu.png)
+ Figura 4. Simulación del módulo superior alu_top: carga de operandos y ejecución de operaciones
 
 ---
 
