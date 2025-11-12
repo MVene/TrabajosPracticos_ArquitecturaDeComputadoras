@@ -47,7 +47,7 @@
   - `BTNR`: reset
 - **LEDs (`o_led`)**: muestran el resultado.
 - **Flags (`o_flags`)**: indican `negative`, `zero`, `carry`.
-- 
+  
 ---
 
 ## Validación y Simulación
@@ -85,17 +85,16 @@ Esto permite reutilizar la ALU en futuros proyectos con diferentes tamaños de d
 
 - `zero`: resultado igual a cero
 - `negative`: bit más significativo en 1
-- `carry`: acarreo en ADD o SUB
+- `carry`: acarreo en ADD 
 ---
 
 ##  Archivos de Restricción
 
 - Clock: 100 MHz
-- Switches: `SW0–SW7`
+- Switches: `SW7-SW0`
 - Botones: `BTNC–BTNR`
-- LEDs: `LD0–LD7` y `LD15–LD13` para flags
+- LEDs: `LD7-LD0` y `LD15–LD13` para flags
 
- esquema de distribución de pines.*
 
 ---
 
