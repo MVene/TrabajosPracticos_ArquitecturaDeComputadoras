@@ -57,10 +57,10 @@
 - Simulación en Vivado con capturas de resultados
 
 
- ![alt text](img/RTL.png)
+ ![alt text](img/RTL.jpeg)
  Figura 1. Esquematico RTL
  
- Figura2. [Esquematico Tecnologia](../img/schematic.pdf)
+ Figura2. [Esquematico Tecnologia](img/schematic.pdf)
  
  ![alt text](img/vivado-alu.png)
  Figura 3. Simulación de la ALU: operaciones con actualización de banderas 
