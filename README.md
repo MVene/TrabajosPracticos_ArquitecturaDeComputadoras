@@ -13,6 +13,6 @@ Este repositorio contiene los desarrollos realizados para los trabajos práctico
 
 ---
 
-**TP1 – ALU ParametrizablE -** [Ver documentación](TP01/README.md)
+**TP1 – ALU Parametrizable -** [Ver documentación](TP01/README.md)
 
 ---
