@@ -26,9 +26,7 @@ En este TP, la ALU se integra con la comunicación UART, recibiendo operandos y 
 El sistema se compone de tres módulos principales: **UART RX**, **FSM de Control con ALU**, y **UART TX**.  
 El flujo de datos es el siguiente:
 
-+-----------+       +-------------------+       +-----------+
-|  UART RX  | --->  |  FSM + ALU (TP01) | --->  |  UART TX  |
-+-----------+       +-------------------+       +-----------+
+ ![alt text](img/img1.jpeg)
 
 
 - **UART RX**: recibe los bytes enviados desde la PC.
@@ -68,13 +66,7 @@ Se diseñó como una **FSM tipo Moore**, con los siguientes estados:
 
 ### Diagrama de Estados (FSM de Control)
 
-+-------+       +----------+       +----------+       +------+
-| IDLE  | --->  | RECEIVE  | --->  | EXECUTE  | --->  | SEND |
-+-------+       +----------+       +----------+       +------+
-^                                                  |
-|--------------------------------------------------+
+![alt text](img/img2.jpeg)
 
 ---
 
-
----
