@@ -5,7 +5,7 @@
 
 El objetivo de este trabajo práctico es implementar una comunicación serie mediante el protocolo **UART**, controlada por **máquinas de estado finitas (FSM)**.  
 La información recibida por UART se procesa en la **ALU** desarrollada en el TP01, y posteriormente el resultado se transmite nuevamente por UART.  
-De esta manera, se integran conceptos de diseño digital, comunicación asíncrona y control mediante FSM en un sistema completo.
+De esta manera, se integran conceptos de diseño digital, comunicación asíncrona y control mediante FSM en un sistema completo.Implementación de un canal selectivo en frecuencia.
 
 ---
 
