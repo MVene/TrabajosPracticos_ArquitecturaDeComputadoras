@@ -7,10 +7,11 @@ create_clock -period 10.0 -name sys_clk -waveform {0 5} [get_ports clk]
 set_property PACKAGE_PIN U18 [get_ports rst]
 set_property IOSTANDARD LVCMOS33 [get_ports rst]
 
-## UART RX/TX
-set_property PACKAGE_PIN V11 [get_ports rx]
+## UART RX/TX (USB-UART Basys3)
+set_property PACKAGE_PIN U16 [get_ports rx]   ; RX desde PC → FPGA
 set_property IOSTANDARD LVCMOS33 [get_ports rx]
-set_property PACKAGE_PIN U12 [get_ports tx]
+
+set_property PACKAGE_PIN V16 [get_ports tx]   ; TX desde FPGA → PC
 set_property IOSTANDARD LVCMOS33 [get_ports tx]
 
 ## Switches (para operandos manuales)
