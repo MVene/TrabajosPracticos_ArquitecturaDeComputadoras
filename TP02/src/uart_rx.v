@@ -48,7 +48,7 @@ module uart_rx #(
                 end
             S_START:
                 if (tick)
-                    if (OVERSAMPLING/2 - 1)     // Cuando llega a 7 reseteamos los ticks a 0 para poder leer a la mitad de los bits a los 16 ticks
+                    if (s_reg == (OVERSAMPLING/2 - 1))     // Cuando llega a 7 reseteamos los ticks a 0 para poder leer a la mitad de los bits a los 16 ticks
                     begin
                         s_next = 0;
                         n_next = 0;

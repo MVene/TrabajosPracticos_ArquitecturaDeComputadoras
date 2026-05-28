@@ -44,7 +44,8 @@ module uart_alu_top (
     wire [DATA_WIDTH-1:0] alu_b;    // operando B de la ALU
     wire [OP_WIDTH-1:0] alu_opcode; // opcode de la ALU
     wire [DATA_WIDTH-1:0] alu_result; // resulado de la operacion
-    wire alu_carry, alu_zero;  // flags de la operacion
+    wire alu_carry, alu_zero;
+    wire alu_negative;  // flags de la operacion
     
     // Instanciamos el baud rate generator
     baud_gen #(
@@ -93,7 +94,7 @@ module uart_alu_top (
         .i_b(alu_b),             // operando B
         .i_op(alu_opcode),       // código de operación
         .o_result(alu_result),   // resultado
-        .o_negative(),           // flag negativo
+        .o_negative(alu_negative),           // flag negativo
         .o_zero(alu_zero),       // flag zero
         .o_carry(alu_carry)      // flag carry
     );
@@ -119,7 +120,7 @@ module uart_alu_top (
         .alu_result(alu_result),
         .alu_carry(alu_carry),
         .alu_zero(alu_zero),
-        .alu_negative(o_negative)   
+        .alu_negative(alu_negative)
     );
 
 
