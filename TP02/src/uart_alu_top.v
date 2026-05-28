@@ -1,53 +1,53 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 15/10/2025 05:59:51 PM
-// Design Name: 
-// Module Name: uart_alu_top
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
 
 module uart_alu_top (
-    input wire clk,      // FPGA clock
-    input wire rst,      // Reset
-    input wire rx,       // linea UART RX
-    output wire tx       // linea UART TX
+    input wire clk,
+    input wire rst,
+    input wire rx,
+    output wire tx,
+
+    output wire [7:0] leds,
+    output wire [2:0] flags
 );
 
-    // Parametros
-    parameter CLK_FREQ = 100_000_000;  // 100MHz
-    parameter BAUD_RATE = 9600;        // 9600 baud
-    parameter DATA_WIDTH = 8;          // 8 bits de datos
-    parameter OP_WIDTH = 6;            // 6 bits para el opcode de la ALU
+    parameter CLK_FREQ = 100_000_000;
+    parameter BAUD_RATE = 9600;
+    parameter DATA_WIDTH = 8;
+    parameter OP_WIDTH = 6;
 
-    // Internal signals
-    wire tick;                // tick del baud
-    wire rx_done;             // señal completa RX
-    wire [DATA_WIDTH-1:0] rx_data;  // datos recibidos
-    wire tx_start;            // señal de start de TX
-    wire [DATA_WIDTH-1:0] tx_data;  // Datos a transmitir
-    wire tx_done;             // señal completa TX
-    
-    wire [DATA_WIDTH-1:0] alu_a;    // operando A de la ALU
-    wire [DATA_WIDTH-1:0] alu_b;    // operando B de la ALU
-    wire [OP_WIDTH-1:0] alu_opcode; // opcode de la ALU
-    wire [DATA_WIDTH-1:0] alu_result; // resulado de la operacion
-    wire alu_carry, alu_zero;
-    wire alu_negative;  // flags de la operacion
-    
-    // Instanciamos el baud rate generator
+    wire tick;
+    wire rx_done;
+    wire [DATA_WIDTH-1:0] rx_data;
+
+    wire tx_start;
+    wire [DATA_WIDTH-1:0] tx_data;
+    wire tx_done;
+
+    wire [DATA_WIDTH-1:0] alu_a;
+    wire [DATA_WIDTH-1:0] alu_b;
+    wire [OP_WIDTH-1:0] alu_opcode;
+    wire [DATA_WIDTH-1:0] alu_result;
+
+    wire alu_carry;
+    wire alu_zero;
+    wire alu_negative;
+
+    reg [7:0] leds_reg;
+    reg [2:0] flags_reg;
+
+    assign leds = leds_reg;
+    assign flags = flags_reg;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            leds_reg <= 8'b00000000;
+            flags_reg <= 3'b000;
+        end else begin
+            leds_reg <= alu_result;
+            flags_reg <= {alu_carry, alu_zero, alu_negative};
+        end
+    end
+
     baud_gen #(
         .CLK_FREQ(CLK_FREQ),
         .BAUD_RATE(BAUD_RATE),
@@ -57,8 +57,7 @@ module uart_alu_top (
         .rst(rst),
         .tick(tick)
     );
-    
-    // Instanciamos el receptor UART
+
     uart_rx #(
         .DATA_BITS(DATA_WIDTH),
         .OVERSAMPLING(16)
@@ -70,8 +69,7 @@ module uart_alu_top (
         .rx_done(rx_done),
         .data_out(rx_data)
     );
-    
-    // Instanciamos el transmisor UART
+
     uart_tx #(
         .DATA_BITS(DATA_WIDTH),
         .OVERSAMPLING(16)
@@ -84,36 +82,34 @@ module uart_alu_top (
         .tx(tx),
         .tx_done(tx_done)
     );
-    
-    // Instanciamos la ALU
+
     alu #(
         .DATA_WIDTH(DATA_WIDTH),
         .OP_WIDTH(OP_WIDTH)
     ) alu_inst (
-        .i_a(alu_a),             // operando A
-        .i_b(alu_b),             // operando B
-        .i_op(alu_opcode),       // código de operación
-        .o_result(alu_result),   // resultado
-        .o_negative(alu_negative),           // flag negativo
-        .o_zero(alu_zero),       // flag zero
-        .o_carry(alu_carry)      // flag carry
+        .i_a(alu_a),
+        .i_b(alu_b),
+        .i_op(alu_opcode),
+        .o_result(alu_result),
+        .o_negative(alu_negative),
+        .o_zero(alu_zero),
+        .o_carry(alu_carry)
     );
 
-    
     interface #(
         .N_DATA(DATA_WIDTH),
         .N_OP(OP_WIDTH)
     ) interface_inst (
         .clk(clk),
         .rst(rst),
-        // UART RX
+
         .rx_done(rx_done),
         .rx_data(rx_data),
-        // UART TX
+
         .tx_start(tx_start),
         .tx_data(tx_data),
         .tx_done(tx_done),
-        // ALU
+
         .alu_a(alu_a),
         .alu_b(alu_b),
         .alu_opcode(alu_opcode),
@@ -122,6 +118,5 @@ module uart_alu_top (
         .alu_zero(alu_zero),
         .alu_negative(alu_negative)
     );
-
 
 endmodule
