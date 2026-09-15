@@ -1,46 +1,26 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 15/10/2025 05:58:27 PM
-// Design Name: 
-// Module Name: interface
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: FSM responsable de cargar los operandos en la ALU recibidos mediante uart_rx
-// Luego devuelve el resultado y los flags de la operacion mediante uart_tx
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
 
 module interface #(
     parameter N_DATA = 8,       // ancho de datos
     parameter N_OP = 6          // ancho de código de operación
 )(
-    input wire clk,
-    input wire rst,
+    input wire i_clk,
+    input wire i_rst,
     // interfaz UART RX
-    input wire rx_done,
-    input wire [N_DATA-1:0] rx_data,
+    input wire i_rx_done,
+    input wire [N_DATA-1:0] i_rx_data,
     // interfaz UART TX
-    output reg tx_start,
-    output reg [N_DATA-1:0] tx_data,
-    input wire tx_done,
+    output reg o_tx_start,
+    output reg [N_DATA-1:0] o_tx_data,
+    input wire i_tx_done,
     // interfaz ALU
-    output reg [N_DATA-1:0] alu_a,
-    output reg [N_DATA-1:0] alu_b,
-    output reg [N_OP-1:0] alu_opcode,
-    input wire [N_DATA-1:0] alu_result,
-    input wire alu_carry,
-    input wire alu_zero,
-    input wire alu_negative
+    output reg [N_DATA-1:0] o_alu_a,
+    output reg [N_DATA-1:0] o_alu_b,
+    output reg [N_OP-1:0] o_alu_opcode,
+    input wire [N_DATA-1:0] i_alu_result,
+    input wire i_alu_carry,
+    input wire i_alu_zero,
+    input wire i_alu_negative
 
 );
 
@@ -56,61 +36,61 @@ module interface #(
     
     reg [2:0] state;
     
-    always @(posedge clk) begin
-        if (rst) begin
+    always @(posedge i_clk) begin
+        if (i_rst) begin
             state <= S_GET_A;
-            tx_start <= 1'b0;
-            tx_data <= {N_DATA{1'b0}};
-            alu_a <= {N_DATA{1'b0}};
-            alu_b <= {N_DATA{1'b0}};
-            alu_opcode <= {N_OP{1'b0}};
+            o_tx_start <= 1'b0;
+            o_tx_data <= {N_DATA{1'b0}};
+            o_alu_a <= {N_DATA{1'b0}};
+            o_alu_b <= {N_DATA{1'b0}};
+            o_alu_opcode <= {N_OP{1'b0}};
         end else begin
             // tx_start se va a activar solo durante un ciclo
-            tx_start <= 1'b0;
+            o_tx_start <= 1'b0;
             
             case (state)
                 S_GET_A: begin
-                    if (rx_done) begin
-                        alu_a <= rx_data;
+                    if (i_rx_done) begin
+                        o_alu_a <= i_rx_data;
                         state <= S_GET_B;
                     end
                 end
                 
                 S_GET_B: begin
-                    if (rx_done) begin
-                        alu_b <= rx_data;
+                    if (i_rx_done) begin
+                        o_alu_b <= i_rx_data;
                         state <= S_GET_OP;
                     end
                 end
                 
                 S_GET_OP: begin
-                    if (rx_done) begin
-                        alu_opcode <= rx_data[N_OP-1:0];
+                    if (i_rx_done) begin
+                        o_alu_opcode <= i_rx_data[N_OP-1:0];
                         // Como la ALU es combinacional, pasamos directamente al estado para mandar el resultado
                         state <= S_SEND_RESULT;
                     end
                 end
                 
                 S_SEND_RESULT: begin
-                    tx_data <= alu_result;
-                    tx_start <= 1'b1;
+                    o_tx_data <= i_alu_result;
+                    o_tx_start <= 1'b1;
                     state <= S_WAIT_RESULT;
                 end
                 
                 S_WAIT_RESULT: begin
-                    if (tx_done) begin
+                    if (i_tx_done) begin
                         state <= S_SEND_FLAGS;
                     end
                 end
                 
                 S_SEND_FLAGS: begin
-                    tx_data <= {{(N_DATA-3){1'b0}}, alu_carry, alu_zero, alu_negative};
-                    tx_start <= 1'b1;
+                    o_tx_data <= {{(N_DATA-3){1'b0}}, i_alu_carry, i_alu_zero, i_alu_negative};
+                    o_tx_start <= 1'b1;
                     state <= S_WAIT_FLAGS;
                 end
                 
                 S_WAIT_FLAGS: begin
-                    if (tx_done) begin
+                    if (i_tx_done) begin
                         state <= S_GET_A;
                     end
                 end

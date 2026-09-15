@@ -31,14 +31,14 @@ module alu #(
         o_carry    = 0;
 
         case (i_op)
-            `ADD: {o_carry, o_result} = {1'b0, i_a} + {1'b0, i_b};                   // ADD
-            `SUB: o_result = {1'b0, i_a} - {1'b0, i_b};                                 // SUB
-            `AND: o_result = i_a & i_b;                                                 // AND
-            `OR:  o_result = i_a | i_b;                                                 // OR
-            `XOR: o_result = i_a ^ i_b;                                                 // XOR
-            `SRA: o_result = $signed(i_a) >>> i_b[SHIFT_WIDTH-1:0];                     // SRA
-            `SRL: o_result = i_a >> i_b[SHIFT_WIDTH-1:0];                               // SRL
-            `NOR: o_result = ~(i_a | i_b);                                              // NOR
+            `ADD: {o_carry, o_result} = {1'b0, i_a} + {1'b0, i_b};         // ADD
+            `SUB: o_result = {1'b0, i_a} - {1'b0, i_b};                    // SUB
+            `AND: o_result = i_a & i_b;                                    // AND
+            `OR:  o_result = i_a | i_b;                                    // OR
+            `XOR: o_result = i_a ^ i_b;                                    // XOR
+            `SRA: o_result = $signed(i_a) >>> i_b[SHIFT_WIDTH-1:0];        // SRA
+            `SRL: o_result = i_a >> i_b[SHIFT_WIDTH-1:0];                  // SRL
+            `NOR: o_result = ~(i_a | i_b);                                 // NOR
             default:   o_result = {DATA_WIDTH{1'b0}};
         endcase
 
