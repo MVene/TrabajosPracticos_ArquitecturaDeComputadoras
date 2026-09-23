@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
 
-`define ADD 6'b100000
-`define SUB 6'b100010
-`define AND 6'b100100
-`define OR  6'b100101
-`define XOR 6'b100110
-`define SRA 6'b000011
-`define SRL 6'b000010
-`define NOR 6'b100111
+`define ADD 6'b100000 // 0x20
+`define SUB 6'b100010 // 0x22
+`define AND 6'b100100 // 0x24
+`define OR  6'b100101 // 0x25
+`define XOR 6'b100110 // 0x26
+`define SRA 6'b000011 // 0x03
+`define SRL 6'b000010 // 0x02
+`define NOR 6'b100111 // 0x27
 
 module alu #(
     parameter DATA_WIDTH = 8,

@@ -35,7 +35,7 @@ OPERACIONES = {
     },
     "SRA": {
         "opcode": 0x03,
-        "op_name": "<<"
+        "op_name": ">>>"
     },
     "SRL": {
         "opcode": 0x02,
