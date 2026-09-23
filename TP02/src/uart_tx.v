@@ -19,8 +19,8 @@ module uart_tx #(
     reg [1:0] current_state, next_state;
     reg [3:0] tick_count_reg, tick_count_next;
     reg [$clog2(DATA_BITS)-1:0] bit_count_reg, bit_count_next;
-    reg [DATA_BITS-1:0] data_reg;   // Registro para capturar data_in
-    reg tx_next;                    // Señal para el próximo valor de tx
+    reg [DATA_BITS-1:0] data_reg;   // Registro para capturar i_data_in
+    reg tx_next;                    // Señal para el próximo valor de o_tx
 
     always @(posedge i_clk) begin
         if (i_rst) begin

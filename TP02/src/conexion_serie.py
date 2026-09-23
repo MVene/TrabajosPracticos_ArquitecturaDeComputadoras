@@ -138,10 +138,10 @@ with serial.Serial(PORT, BAUD, timeout=2) as ser:
     # =========================
 
     print()
+
     print("=========================")
     print("       ENTRADAS")
     print("=========================")
-
     print(f"A DECIMAL:  {A}")
     print(f"A HEXA:     0x{A:02X}")
     print(f"A BINARIO:  {A:08b}")
@@ -153,15 +153,11 @@ with serial.Serial(PORT, BAUD, timeout=2) as ser:
     print(f"B BINARIO:  {B:08b}")
 
     print()
+
     print("=========================")
     print("       RESULTADO")
     print("=========================")
-
-    if op_ingresada == "NOT":
-        print(f"{OP_NAME} {A} = {resultado_signed}")
-    else:
-        print(f"{A} {OP_NAME} {B} = {resultado_signed}")
-
+    print(f"{A} {OP_NAME} {B} = {resultado_signed}")
     print(f"RESULTADO EN HEXA:    0x{resultado_raw:02X}")
     print(f"RESULTADO EN BINARIO: {resultado_raw:08b}")
     print(f"FLAG: {flag_text}")
