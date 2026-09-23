@@ -15,4 +15,6 @@ Este repositorio contiene los desarrollos realizados para los trabajos práctico
 
 **TP1 – ALU Parametrizable -** [Ver documentación](TP01/README.md)
 
+**TP2 – Comunicación UART -** [Ver documentación](TP02/README.md)
+
 ---
